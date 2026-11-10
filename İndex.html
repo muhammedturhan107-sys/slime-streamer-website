@@ -1,0 +1,408 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10101c">
+<meta name="description" content="Slime Streamer ile kendi slime dünyanı oluştur! Slime yap, yoğur, uzat ve yayıncı karakterini tasarla.">
+<meta property="og:title" content="Slime Streamer">
+<meta property="og:description" content="Make, squish & stream slime!">
+<title>Slime Streamer — Make, Squish & Stream</title>
+<style>
+:root {
+  --bg:#10101c;
+  --panel:#19192a;
+  --pink:#ff69c8;
+  --purple:#a78bfa;
+  --green:#9dfc9c;
+  --text:#f8f5ff;
+  --muted:#aaa7bd;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--text);
+  font-family:system-ui,-apple-system,Segoe UI,sans-serif;
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none}
+.container{width:min(1100px,90%);margin:auto}
+header{
+  position:sticky;top:0;z-index:10;
+  background:#10101ceF;
+  backdrop-filter:blur(16px);
+  border-bottom:1px solid #ffffff12;
+}
+.nav{
+  height:72px;display:flex;align-items:center;
+  justify-content:space-between;gap:15px;
+}
+.brand{display:flex;align-items:center;gap:11px;font-weight:900}
+.logo{
+  width:43px;height:43px;border-radius:15px;
+  display:grid;place-items:center;
+  background:linear-gradient(135deg,#ff72cf,#9a7cff);
+  font-size:25px;box-shadow:0 5px 25px #ff69c855;
+}
+.navlinks{display:flex;gap:24px;color:var(--muted);font-size:14px}
+.navlinks a:hover{color:white}
+.hero{
+  min-height:590px;display:grid;
+  grid-template-columns:1.1fr .9fr;
+  align-items:center;gap:35px;padding:65px 0;
+}
+.tag{
+  display:inline-block;padding:8px 13px;
+  border:1px solid #ff69c855;border-radius:30px;
+  color:#ff9bdb;background:#ff69c812;
+  font-size:12px;font-weight:700;
+}
+h1{
+  font-size:clamp(45px,7vw,76px);
+  line-height:1.04;letter-spacing:-3px;
+  margin:22px 0;
+}
+.gradient{
+  background:linear-gradient(90deg,#ff77cf,#b69aff,#a5ffb1);
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+}
+.hero p{color:var(--muted);font-size:17px;line-height:1.8;max-width:540px}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.btn{
+  padding:14px 21px;border-radius:14px;
+  display:inline-flex;align-items:center;justify-content:center;
+  font-weight:800;transition:.2s;
+}
+.btn:hover{transform:translateY(-3px)}
+.primary{background:linear-gradient(100deg,#ff68c8,#a27bff);color:white}
+.secondary{border:1px solid #ffffff30;background:#ffffff09}
+.hero-art{
+  min-height:390px;border-radius:35px;
+  background:
+  radial-gradient(circle at 50% 45%,#ff73d533,transparent 48%),
+  linear-gradient(145deg,#292044,#17172b);
+  border:1px solid #ffffff17;
+  display:grid;place-items:center;position:relative;overflow:hidden;
+}
+.slime{
+  width:220px;height:190px;
+  background:linear-gradient(145deg,#baffac,#66e7c0 55%,#8c9aff);
+  border-radius:48% 52% 43% 57% / 53% 42% 58% 47%;
+  box-shadow:inset -20px -20px 35px #4d9b9b55,
+  inset 15px 15px 30px #ffffff99,
+  0 20px 70px #7df6d655;
+  transform:rotate(-12deg);
+  animation:float 4s ease-in-out infinite;
+  position:relative;
+}
+.slime:before,.slime:after{
+  content:"";position:absolute;background:#ffffff99;
+  border-radius:50%;
+}
+.slime:before{width:45px;height:18px;top:35px;left:40px;transform:rotate(-35deg)}
+.slime:after{width:20px;height:9px;top:65px;left:75px}
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(-12deg) scale(1)}
+  50%{transform:translateY(-18px) rotate(8deg) scale(1.04)}
+}
+.bubble{
+  position:absolute;border-radius:50%;
+  background:#ffffff16;border:1px solid #ffffff20;
+}
+.b1{width:65px;height:65px;top:45px;left:50px}
+.b2{width:35px;height:35px;right:65px;top:90px}
+.b3{width:85px;height:85px;right:40px;bottom:35px}
+.art-label{
+  position:absolute;bottom:25px;
+  background:#11111dcc;padding:11px 17px;
+  border-radius:30px;font-weight:800;
+}
+section{padding:75px 0}
+.section-head{text-align:center;margin-bottom:38px}
+.section-head h2{font-size:clamp(30px,5vw,43px);margin:0 0 12px}
+.section-head p{color:var(--muted);line-height:1.7}
+.features{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:17px;
+}
+.feature{
+  background:var(--panel);border:1px solid #ffffff12;
+  border-radius:22px;padding:25px;
+  transition:.2s;
+}
+.feature:hover{transform:translateY(-5px);border-color:#ff69c866}
+.feature .emoji{font-size:34px}
+.feature h3{margin:15px 0 8px}
+.feature p{color:var(--muted);line-height:1.7;font-size:14px}
+.screens{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:18px;
+}
+.screen{
+  aspect-ratio:9/16;border-radius:24px;
+  border:1px dashed #ffffff40;
+  background:linear-gradient(145deg,#292044,#17172b);
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:20px;color:var(--muted);
+  overflow:hidden;
+}
+.screen img{width:100%;height:100%;object-fit:cover;border-radius:20px}
+.screen small{display:block;margin-top:10px}
+.update{
+  background:linear-gradient(120deg,#292044,#24203a);
+  border:1px solid #ffffff18;border-radius:25px;padding:28px;
+}
+.update h3{margin-top:0}
+.update li{color:#d1ccdf;margin:12px 0;line-height:1.6}
+.download{
+  text-align:center;
+  background:linear-gradient(130deg,#302044,#202c37);
+  border:1px solid #ffffff18;border-radius:30px;
+  padding:55px 25px;
+}
+.download h2{font-size:clamp(30px,5vw,44px);margin:0 0 12px}
+.download p{color:var(--muted);line-height:1.7}
+.details{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:12px;
+}
+.detail{
+  background:var(--panel);border-radius:16px;
+  padding:19px;text-align:center;
+}
+.detail strong{display:block;font-size:19px;margin-bottom:7px}
+.detail span{color:var(--muted);font-size:12px}
+.privacy{
+  background:#19192a;border-radius:20px;
+  padding:25px;color:var(--muted);line-height:1.8;
+  font-size:14px;
+}
+.privacy h3{color:white}
+footer{
+  border-top:1px solid #ffffff15;
+  padding:30px 0;color:var(--muted);
+  font-size:13px;text-align:center;
+}
+footer a{color:#ff9bdb}
+@media(max-width:760px){
+  .navlinks{gap:12px;font-size:12px}
+  .hero{grid-template-columns:1fr;padding:55px 0}
+  .hero-art{min-height:300px}
+  .features{grid-template-columns:1fr 1fr}
+  .details{grid-template-columns:1fr 1fr}
+}
+@media(max-width:480px){
+  .navlinks a:nth-child(2){display:none}
+  .features{grid-template-columns:1fr}
+  .screens{grid-template-columns:1fr 1fr}
+  .screen:last-child{display:none}
+  h1{letter-spacing:-2px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="brand" href="#">
+      <span class="logo">🟢</span>
+      <span>SLIME STREAMER</span>
+    </a>
+    <nav class="navlinks">
+      <a href="#features">Özellikler</a>
+      <a href="#screens">Görseller</a>
+      <a href="#about">Hakkında</a>
+      <a href="#download">İndir</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <div class="container hero">
+    <div>
+      <span class="tag">🟣 SLIME • ASMR • STREAM</span>
+      <h1>Make, Squish <span class="gradient">& Stream!</span></h1>
+      <p>
+        Kendi slime'ını sıfırdan oluştur. Yoğur, bastır,
+        uzat ve farklı malzemelerle kendi slime dünyanı keşfet.
+        Yayıncı karakterini tasarla ve eğlenceli bölümlerde
+        yıldızları topla!
+      </p>
+      <div class="actions">
+        <a class="btn primary"
+           href="https://apps.apple.com/app/id6825888312"
+           target="_blank" rel="noopener">
+           App Store
+        </a>
+        <a class="btn secondary" href="#features">
+          Oyunu keşfet ↓
+        </a>
+      </div>
+    </div>
+    <div class="hero-art">
+      <div class="bubble b1"></div>
+      <div class="bubble b2"></div>
+      <div class="bubble b3"></div>
+      <div class="slime"></div>
+      <div class="art-label">✨ Your Slime. Your Style.</div>
+    </div>
+  </div>
+
+  <section id="features">
+    <div class="container">
+      <div class="section-head">
+        <h2>Slime dünyanı <span class="gradient">keşfet!</span></h2>
+        <p>Her dokunuşta farklı bir deneyim.</p>
+      </div>
+      <div class="features">
+        <article class="feature">
+          <div class="emoji">🧪</div>
+          <h3>Slime Laboratuvarı</h3>
+          <p>Farklı malzemeleri birleştir, renkler ve süslerle kendi slime tariflerini oluştur.</p>
+        </article>
+        <article class="feature">
+          <div class="emoji">💚</div>
+          <h3>Gerçekçi Slime</h3>
+          <p>Slime'ını yoğur, bastır, parmağınla çek ve uzama hareketlerini keşfet.</p>
+        </article>
+        <article class="feature">
+          <div class="emoji">🎧</div>
+          <h3>ASMR Sesleri</h3>
+          <p>Slime ile etkileşim kurarken rahatlatıcı ve tatmin edici sesleri deneyimle.</p>
+        </article>
+        <article class="feature">
+          <div class="emoji">🎁</div>
+          <h3>Yayıncı Bölümleri</h3>
+          <p>İzleyici hediyelerini zamanında hazırla ve oyun içinde yıldızlar kazan.</p>
+        </article>
+        <article class="feature">
+          <div class="emoji">🐸</div>
+          <h3>Karakter Tasarımı</h3>
+          <p>İnsan ve hayvan karakterleri arasından seçim yaparak yayıncını tasarla.</p>
+        </article>
+        <article class="feature">
+          <div class="emoji">👕</div>
+          <h3>Kıyafetler</h3>
+          <p>Yayıncı karakterini farklı forma ve kıyafetlerle kişiselleştir.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="screens">
+    <div class="container">
+      <div class="section-head">
+        <h2>Oyun <span class="gradient">ekranları</span></h2>
+        <p>Slime Streamer'dan gerçek ekran görüntüleri.</p>
+      </div>
+      <div class="screens">
+        <div class="screen">
+          <div>📱<br>Gerçek oyun ekran görüntüsü 1
+            <small>screenshots/1.png</small>
+          </div>
+        </div>
+        <div class="screen">
+          <div>📱<br>Gerçek oyun ekran görüntüsü 2
+            <small>screenshots/2.png</small>
+          </div>
+        </div>
+        <div class="screen">
+          <div>📱<br>Gerçek oyun ekran görüntüsü 3
+            <small>screenshots/3.png</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head">
+        <h2>Son <span class="gradient">güncelleme</span></h2>
+        <p>Slime Streamer sürüm 1.0.1</p>
+      </div>
+      <div class="update">
+        <h3>✨ Yenilikler</h3>
+        <ul>
+          <li>Yeni kaslı böcek karakteri.</li>
+          <li>Yenilenen insan yüzleri, gözler, saçlar ve ten seçenekleri.</li>
+          <li>Geliştirilmiş hayvan karakterleri.</li>
+          <li>Yayıncı karakteri için açılıp kapatılabilen sesler.</li>
+          <li>Kişiselleştirilebilir hediye tablosu.</li>
+          <li>Daha hızlı açılış ve daha akıcı oyun deneyimi.</li>
+          <li>Hata düzeltmeleri.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <div class="section-head">
+        <h2>Uygulama <span class="gradient">bilgileri</span></h2>
+      </div>
+      <div class="details">
+        <div class="detail"><strong>1.0.1</strong><span>Sürüm</span></div>
+        <div class="detail"><strong>Ücretsiz</strong><span>İndirme</span></div>
+        <div class="detail"><strong>iOS 15+</strong><span>Minimum sistem</span></div>
+        <div class="detail"><strong>TR / EN</strong><span>Diller</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="download">
+    <div class="container">
+      <div class="download">
+        <h2>Slime zamanı! <span class="gradient">🟢</span></h2>
+        <p>Slime Streamer'ı App Store'dan keşfet.</p>
+        <a class="btn primary"
+           href="https://apps.apple.com/app/id6825888312"
+           target="_blank" rel="noopener">
+           App Store'da görüntüle
+        </a>
+        <p style="font-size:12px;margin-top:20px">
+          Yalnızca iPhone için kullanılabilir.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="privacy">
+    <div class="container">
+      <div class="section-head">
+        <h2>Gizlilik <span class="gradient">bilgileri</span></h2>
+      </div>
+      <div class="privacy">
+        <h3>Gizlilik ve veri kullanımı</h3>
+        <p>
+          Apple App Store'daki geliştirici beyanına göre uygulamanın
+          gizlilik uygulamaları; reklam ve analiz amacıyla konum,
+          tanımlayıcılar, kullanım verileri, satın alma bilgileri ve
+          tanılama verilerinin işlenmesini içerebilir.
+        </p>
+        <p>
+          Bu bilgiler Apple tarafından geliştiricinin beyanı olarak
+          sunulmaktadır ve Apple tarafından doğrulanmış değildir.
+          Güncel ayrıntılar için App Store gizlilik bölümünü inceleyin.
+        </p>
+        <a href="https://apps.apple.com/app/id6825888312"
+           target="_blank" rel="noopener" style="color:#ff9bdb">
+          App Store gizlilik bilgilerini görüntüle →
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="container">
+    <div style="font-size:23px;margin-bottom:10px">🟢 Slime Streamer</div>
+    <p>© 2026 Muhammed Sakalli. Tüm hakları saklıdır.</p>
+    <p>Bu web sitesi Slime Streamer uygulamasının tanıtımı içindir.</p>
+    <p><a href="#privacy">Gizlilik bilgileri</a> ·
+       <a href="#about">Uygulama hakkında</a></p>
+  </div>
+</footer>
+
+</body>
+</html>
